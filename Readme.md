@@ -1,6 +1,6 @@
-# This is a Personal CLI Assistance
-## Planned features include
-### Fetching Weather Reports for specified location
-### Retrieving Information on Music Artists' next live performances
-### Sports Games score updates
-### Keeping a checklist on database
+# This is a CLI Text-Based Game
+## Planned features include:
+### 1. Battling Enemies with Randomized Health and Damage Values
+### 2. Saved Game Files Locally
+### 3. In Game Store
+### 4. Character Attributes and Levels
