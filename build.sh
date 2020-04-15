@@ -1,2 +1,2 @@
-javac Bot.java
-java Bot
+javac Game.java
+java Game
