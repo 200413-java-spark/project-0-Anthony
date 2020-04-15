@@ -1,3 +1,5 @@
+package com.github.aale12;
+
 import java.util.Scanner;
 
 public class Game {
@@ -77,5 +79,6 @@ public class Game {
       }
     }
     System.out.println("Thanks for playing!");
+    userInput.close();
   }
 }
