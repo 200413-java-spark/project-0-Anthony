@@ -1,18 +1,23 @@
 package com.github.aale12.game;
 
 public class PlayerCharacter extends Character {
-  public int killStreak;
+  public int score;
 
-  public PlayerCharacter(int Hp, int attack, String name, int killStreak) {
+  public PlayerCharacter(int Hp, int attack, String name, int score) {
     super(Hp, attack, name);
-    this.killStreak = killStreak;
+    this.score = score;
   }
 
-  public void increaseKillStreak() {
-    this.killStreak++;
+  public void increaseScore() {
+    this.score++;
   }
 
-  public int getKillStreak() {
-    return this.killStreak;
+  public int getScore() {
+    return this.score;
+  }
+
+  public int setScore(int newScore) {
+    this.score = newScore;
+    return this.score;
   }
 }

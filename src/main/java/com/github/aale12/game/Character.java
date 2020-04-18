@@ -1,6 +1,6 @@
 package com.github.aale12.game;
 
-public class Character {
+abstract class Character {
   public int Hp;
   public int attack;
   public String name;
@@ -16,7 +16,8 @@ public class Character {
   }
 
   public int setHp(int Hp) {
-    return this.Hp - Hp;
+    this.Hp = Hp;
+    return this.Hp;
   }
 
   public int getAttack() {

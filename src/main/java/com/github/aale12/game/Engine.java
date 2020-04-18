@@ -2,6 +2,8 @@ package com.github.aale12.game;
 
 import java.util.Scanner;
 
+import com.github.aale12.io.SaveManagement;
+
 public class Engine {
   public static void run() {
     Scanner userInput = new Scanner(System.in);
@@ -9,7 +11,6 @@ public class Engine {
     final NonPlayerCharacter Enemy = new NonPlayerCharacter(100, 1, "Bandit");
 
     boolean isRunning = true;
-    System.out.println("Welcome!");
     GAME: while (isRunning) {
       System.out.println("================================================");
       Enemy.setHp(100);
@@ -17,7 +18,8 @@ public class Engine {
 
       while (Enemy.getHp() > 0) {
         System.out.println("# Your HP: " + Player.getHp() + " #");
-        System.out.println("# " + Enemy.getHp() + "'s HP: " + Enemy.getHp() + " #");
+        System.out.println("# " + Enemy.getName() + "'s HP: " + Enemy.getHp() + " #");
+        System.out.println("Current Score: " + Player.getScore());
         System.out.println("What to do?");
         System.out.println("1) Attack");
         System.out.println("2) Run");
@@ -28,8 +30,10 @@ public class Engine {
           // int damageTaken = enemyAttack;
           Enemy.setHp(Enemy.getHp() - Player.getAttack());
           Player.setHp(Player.getHp() - Enemy.getAttack());
-          System.out.println("> You attack the " + Enemy.getHp() + " for " + Player.getAttack() + " damage!");
+          System.out.println("> You attack the " + Enemy.getName() + " for " + Player.getAttack() + " damage!");
           System.out.println("> You recieve " + Enemy.getAttack() + " damage!");
+          // System.out.println("\tDebug: Enemy HP: " + Enemy.getHp() + "\n \t Player HP:
+          // " + Player.getHp());
 
           if (Player.getHp() <= 0) {
             System.out.println("> You have died!");
@@ -45,14 +49,16 @@ public class Engine {
       }
       // when you die
       if (Player.getHp() <= 0) {
+        Player.setScore(0);
         System.out.println("Game Over!");
         break;
       }
       // if enemy defeated
+      Player.increaseScore();
+      SaveManagement.createSaveFile(Player.getScore());
       System.out.println("================================================");
-      System.out.println(Enemy.getName() + " was defeated!");
+      System.out.println(Enemy.getName() + " was defeated!\n Your Score: " + Player.getScore());
       System.out.println("You heal your wounds.");
-      Player.increaseKillStreak();
       Player.setHp(100);
       System.out.println("================================================");
       System.out.println("1) Continue Fighting");

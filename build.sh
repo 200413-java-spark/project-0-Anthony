@@ -1,2 +1,1 @@
-javac Game.java
-java Game
+mvn clean compile package
