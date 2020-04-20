@@ -1,11 +1,13 @@
 package com.github.aale12.game;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.github.aale12.io.SaveManagement;
 
 public class Engine {
   public static void run() {
+    String[] localFile;
     Scanner userInput = new Scanner(System.in);
     final PlayerCharacter Player = new PlayerCharacter(100, 45, "You", 0);
     final NonPlayerCharacter Enemy = new NonPlayerCharacter(100, 1, "Bandit");
@@ -13,6 +15,15 @@ public class Engine {
     boolean isRunning = true;
     GAME: while (isRunning) {
       System.out.println("================================================");
+      try {
+        SaveManagement.readSaveFile();
+        String saveFile = SaveManagement.readSaveFile();
+        localFile = saveFile.split(",");
+        Player.setHp(Integer.parseInt(localFile[0]));
+        Player.setScore(Integer.parseInt(localFile[1]));
+      } catch (NoSuchElementException e) {
+        SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
+      }
       Enemy.setHp(100);
       System.out.println("~ " + Enemy.getName() + " has appeared! ~\n");
 
@@ -55,24 +66,26 @@ public class Engine {
       }
       // if enemy defeated
       Player.increaseScore();
-      SaveManagement.createSaveFile(Player.getScore());
       System.out.println("================================================");
       System.out.println(Enemy.getName() + " was defeated!\n Your Score: " + Player.getScore());
-      System.out.println("You heal your wounds.");
-      Player.setHp(100);
+      // System.out.println("You heal your wounds.");
+      // Player.setHp(100);
       System.out.println("================================================");
       System.out.println("1) Continue Fighting");
-      System.out.println("2) Exit");
+      System.out.println("2) Save");
+      System.out.println("3) Exit");
 
       String input = userInput.nextLine();
 
-      while (!input.equals("1") && !input.equals("2")) {
+      while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
         System.out.println("Invalid Command");
         input = userInput.nextLine();
       }
       if (input.equals("1")) {
         System.out.println("You continue the next fight");
       } else if (input.equals("2")) {
+        SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
+      } else if (input.equals("3")) {
         System.out.println("You exit the dungeon!");
         break;
       }
@@ -80,4 +93,5 @@ public class Engine {
     System.out.println("Thanks for playing!");
     userInput.close();
   }
+
 }

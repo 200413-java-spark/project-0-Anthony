@@ -1,7 +1,7 @@
 package com.github.aale12.game;
 
 public class PlayerCharacter extends Character {
-  public int score;
+  private int score;
 
   public PlayerCharacter(int Hp, int attack, String name, int score) {
     super(Hp, attack, name);
