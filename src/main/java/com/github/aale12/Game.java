@@ -6,7 +6,7 @@ import com.github.aale12.game.Engine;
 
 public final class Game {
   public void play() throws IOException {
-    System.out.println("Welcome to Anthony's Game!");
+    System.out.println("Welcome to Anthony's Game!!!");
     Engine.run();
   }
 
