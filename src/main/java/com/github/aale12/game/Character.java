@@ -16,12 +16,15 @@ abstract class Character {
   }
 
   public int setHp(int Hp) {
-    this.Hp = Hp;
-    return this.Hp;
+    return this.Hp = Hp;
   }
 
   public int getAttack() {
     return this.attack;
+  }
+
+  public int setAttack(int attack) {
+    return this.attack = attack;
   }
 
   public String getName() {
