@@ -9,3 +9,4 @@ target/classes/com/github/aale12/Game.class
 target/maven-archiver/pom.properties
 target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+.idea

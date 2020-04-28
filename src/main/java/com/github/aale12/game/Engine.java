@@ -1,19 +1,26 @@
 package com.github.aale12.game;
 
+import java.sql.SQLException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.github.aale12.io.SaveManagement;
+import com.github.aale12.io.SqlDataManagement;
 
 public class Engine {
   public static void run() {
     String[] localFile;
     Scanner userInput = new Scanner(System.in);
-    final PlayerCharacter Player = new PlayerCharacter(100, 45, "You", 0);
+    final PlayerCharacter Player = new PlayerCharacter(100, 45, "Alex", 0);
     final NonPlayerCharacter Enemy = new NonPlayerCharacter(100, 1, "Bandit");
 
     boolean isRunning = true;
     GAME: while (isRunning) {
+      try {
+        SqlDataManagement.testData();
+      } catch (SQLException e1) {
+        e1.printStackTrace();
+      }
       System.out.println("================================================");
       try {
         SaveManagement.readSaveFile();
@@ -23,6 +30,11 @@ public class Engine {
         Player.setScore(Integer.parseInt(localFile[1]));
       } catch (NoSuchElementException e) {
         SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
+        try {
+          SqlDataManagement.writeSqlSaveFile(Player.getHp(), Player.getScore());
+        } catch (SQLException e1) {
+          e1.printStackTrace();
+        }
       }
       Enemy.setHp(100);
       System.out.println("~ " + Enemy.getName() + " has appeared! ~\n");
@@ -84,6 +96,11 @@ public class Engine {
       if (input.equals("1")) {
         System.out.println("You continue the next fight");
       } else if (input.equals("2")) {
+        try {
+          SqlDataManagement.writeSqlSaveFile(Player.getHp(), Player.getScore());
+        } catch (SQLException e1) {
+          e1.printStackTrace();
+        }
         SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
       } else if (input.equals("3")) {
         System.out.println("You exit the dungeon!");
