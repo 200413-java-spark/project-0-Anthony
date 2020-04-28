@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.github.aale12.game.PlayerCharacter;
-
 public class SaveManagement {
   // write to file
   static File save = new File("Save1.csv");
