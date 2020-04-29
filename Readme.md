@@ -3,7 +3,6 @@
 ### 1. Battling Enemies with Tiered Health and Damage Values
 ### 2. Saved Game Files on a persistent SQL Database
 ### 3. In Game Store
-### 4. Character Attributes and Levels
 ## Build
 ### Java
 >mvn clean compile exec:java
