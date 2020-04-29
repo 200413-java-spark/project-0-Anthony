@@ -1,22 +1,22 @@
 package com.github.aale12.game;
 
 abstract class Character {
-  private int Hp;
+  private int health;
   private int attack;
   private String name;
 
-  public Character(int Hp, int attack, String name) {
-    this.Hp = Hp;
+  public Character(int health, int attack, String name) {
+    this.health = health;
     this.attack = attack;
     this.name = name;
   }
 
-  public int getHp() {
-    return this.Hp;
+  public int getHealth() {
+    return this.health;
   }
 
-  public int setHp(int Hp) {
-    return this.Hp = Hp;
+  public int setHealth(int health) {
+    return this.health = health;
   }
 
   public int getAttack() {

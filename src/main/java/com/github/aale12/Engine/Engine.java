@@ -1,77 +1,73 @@
-package com.github.aale12.game;
+package com.github.aale12.Engine;
 
 import java.sql.SQLException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.github.aale12.io.SaveManagement;
+import com.github.aale12.game.NonPlayerCharacter;
+import com.github.aale12.game.PlayerCharacter;
 import com.github.aale12.io.SqlDataManagement;
 
 public class Engine {
   public static void run() {
-    String[] localFile;
-    Scanner userInput = new Scanner(System.in);
-    final PlayerCharacter Player = new PlayerCharacter(100, 45, "Alex", 0);
-    final NonPlayerCharacter Enemy = new NonPlayerCharacter(100, 1, "Bandit");
+    // pregame loading
+    // create enemy placeholder
+    final NonPlayerCharacter Enemy = new NonPlayerCharacter(Health, attack, name);
+    // create player placeholder
+    final PlayerCharacter Player = new PlayerCharacter(5, "NoName", 100, 0, 0, 0, 0, 0, 0, 0);
 
+    // scan to see if character is dead or not, if dead, ask for a name and create
+    // new default character
+    Scanner userInput = new Scanner(System.in);
+    String[] localFile;
+    if (!PreGame.characterStatusCheck()) {
+      PreGame.newGamePrompt();
+      String input = userInput.nextLine();
+      Player = new PlayerCharacter(5, input, 100, 0, 0, 0, 0, 0, 0, 0);
+      // is character is alive, load character
+    } else if (PreGame.characterStatusCheck()) {
+      localFile = PreGame.loadCharacterData().split(",");
+      Player = new PlayerCharacter(5, localFile[0], Integer.parseInt(localFile[1]), Integer.parseInt(localFile[2]),
+          Integer.parseInt(localFile[3]), Integer.parseInt(localFile[4]), Integer.parseInt(localFile[5]),
+          Integer.parseInt(localFile[6]), Integer.parseInt(localFile[7]), Integer.parseInt(localFile[8]));
+    }
+    // game is now loaded and running
     boolean isRunning = true;
     GAME: while (isRunning) {
-      try {
-        SqlDataManagement.testData();
-      } catch (SQLException e1) {
-        e1.printStackTrace();
-      }
       System.out.println("================================================");
-      try {
-        SaveManagement.readSaveFile();
-        String saveFile = SaveManagement.readSaveFile();
-        localFile = saveFile.split(",");
-        Player.setHp(Integer.parseInt(localFile[0]));
-        Player.setScore(Integer.parseInt(localFile[1]));
-      } catch (NoSuchElementException e) {
-        SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
-        try {
-          SqlDataManagement.writeSqlSaveFile(Player.getHp(), Player.getScore());
-        } catch (SQLException e1) {
-          e1.printStackTrace();
-        }
-      }
-      Enemy.setHp(100);
+      PreCombat.preCombatMenu();
+      String input = userInput.nextLine();
+      Enemy.setHealth(100);
       System.out.println("~ " + Enemy.getName() + " has appeared! ~\n");
 
-      while (Enemy.getHp() > 0) {
-        System.out.println("# Your HP: " + Player.getHp() + " #");
-        System.out.println("# " + Enemy.getName() + "'s HP: " + Enemy.getHp() + " #");
+      while (Enemy.getHealth() > 0) {
+        System.out.println("# Your Health: " + Player.getHealth() + " #");
+        System.out.println("# " + Enemy.getName() + "'s Health: " + Enemy.getHealth() + " #");
         System.out.println("Current Score: " + Player.getScore());
         System.out.println("What to do?");
         System.out.println("1) Attack");
         System.out.println("2) Run");
 
-        String input = userInput.nextLine();
+        input = userInput.nextLine();
         if (input.equals("1")) {
-          // int damageDealt = userAttack;
-          // int damageTaken = enemyAttack;
-          Enemy.setHp(Enemy.getHp() - Player.getAttack());
-          Player.setHp(Player.getHp() - Enemy.getAttack());
+          Enemy.setHealth(Enemy.getHealth() - Player.getAttack());
+          Player.setHealth(Player.getHealth() - Enemy.getAttack());
           System.out.println("> You attack the " + Enemy.getName() + " for " + Player.getAttack() + " damage!");
           System.out.println("> You recieve " + Enemy.getAttack() + " damage!");
-          // System.out.println("\tDebug: Enemy HP: " + Enemy.getHp() + "\n \t Player HP:
-          // " + Player.getHp());
 
-          if (Player.getHp() <= 0) {
+          if (Player.getHealth() <= 0) {
             System.out.println("> You have died!");
             break;
           }
         } else if (input.equals("2")) {
           System.out.println("You ran away...into another Enemy!");
-          Enemy.setHp(100);
+          Enemy.setHealth(100);
           continue GAME;
         } else {
           System.out.println("Invalid Command!");
         }
       }
       // when you die
-      if (Player.getHp() <= 0) {
+      if (Player.getHealth() <= 0) {
         Player.setScore(0);
         System.out.println("Game Over!");
         break;
@@ -81,13 +77,13 @@ public class Engine {
       System.out.println("================================================");
       System.out.println(Enemy.getName() + " was defeated!\n Your Score: " + Player.getScore());
       // System.out.println("You heal your wounds.");
-      // Player.setHp(100);
+      // Player.setHealth(100);
       System.out.println("================================================");
       System.out.println("1) Continue Fighting");
       System.out.println("2) Save");
       System.out.println("3) Exit");
 
-      String input = userInput.nextLine();
+      input = userInput.nextLine();
 
       while (!input.equals("1") && !input.equals("2") && !input.equals("3")) {
         System.out.println("Invalid Command");
@@ -97,12 +93,16 @@ public class Engine {
         System.out.println("You continue the next fight");
       } else if (input.equals("2")) {
         try {
-          SqlDataManagement.writeSqlSaveFile(Player.getHp(), Player.getScore());
+          SqlDataManagement.writeSqlSaveFile(Player.getHealth(), Player.getScore());
         } catch (SQLException e1) {
           e1.printStackTrace();
         }
-        SaveManagement.writeSaveFile(Player.getHp(), Player.getScore());
       } else if (input.equals("3")) {
+        try {
+          SqlDataManagement.writeSqlSaveFile(Player.getHealth(), Player.getScore());
+        } catch (SQLException e1) {
+          e1.printStackTrace();
+        }
         System.out.println("You exit the dungeon!");
         break;
       }
