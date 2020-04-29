@@ -12,7 +12,7 @@ public class SqlDataManagement {
   private final static String username = "mydb";
   private final static String password = "mydb";
 
-  public static void testData() throws SQLException {
+  public static ResultSet retrieveSqlSaveDataResultSet() throws SQLException {
     try {
       Class.forName("org.postgresql.Driver");
     } catch (java.lang.ClassNotFoundException e) {
@@ -24,17 +24,17 @@ public class SqlDataManagement {
 
       ResultSet result = statement.executeQuery("select * from character");
       while (result.next()) {
-        System.out.println("id: " + result.getInt("id"));
-        System.out.println("Name: " + result.getString("name"));
-        System.out.println("Health: " + result.getInt("health"));
-        System.out.println("Score: " + result.getInt("score"));
+        return result;
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    System.out.println("Unable to read save data.");
+    return null;
   }
 
-  public static void writeSqlSaveFile(int health, int score) throws SQLException {
+  public static void writeSqlSaveFile(int health, int score, int gold, int potionCt, int lgPotionCt, int smTrinketCt,
+      int mdTrinketCt, int lgTrnketCt) throws SQLException {
     try {
       Class.forName("org.postgresql.Driver");
     } catch (java.lang.ClassNotFoundException e) {
@@ -42,10 +42,12 @@ public class SqlDataManagement {
     }
     try (Connection connection = DriverManager.getConnection(url, username, password);
         Statement statement = connection.createStatement();) {
-      String query = "UPDATE character " + "SET health = " + health + ", score = " + score + " where id=0";
+      String query = "UPDATE character" + "SET health = " + health + ", score = " + score + ", gold = " + gold
+          + ", potionCt = " + potionCt + ", lgPotionCt = " + lgPotionCt + ", smTrinketCt = " + smTrinketCt
+          + ", mdTrinketCt = " + mdTrinketCt + ", lgPotionCt = " + lgPotionCt + " where id=0";
       PreparedStatement ps = connection.prepareStatement(query);
       ps.executeUpdate();
-      System.out.println("attempting to save");
+      System.out.println("Attempting to save game data");
     }
   }
 }
