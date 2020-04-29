@@ -15,7 +15,7 @@
 
 ## Design
 ### Architecture
-- Java Warrior is designed to be a simple text-based RPG adventure/fighting game.
+- Java Warrior is designed to be a cookie cutter text-based RPG adventure/fighting game.
 - Players, Enemies, and items are categorized into classes and subclasses
 - The io.SqlDataManagement file reads, writes, and updates SQL files to and from a persistent SQL Database
 
@@ -61,10 +61,9 @@
   - If the player falls in battle, the character is deleted from the database.
   - Restarting the application will prompt for a new name
 
--Future Development
+- Future Development
   - Restructuring Engine.java to be more object oriented
-  - Adding additional JUnit tests
-  - Adding character levels and experience points
-  - Adding character attributes
-  - Adding equipment
-  - Adding bosses and new locations
+  - Additional JUnit tests
+  - User customizable difficulty
+  - Character levels, experience, equipment
+  - Bosses, locations, special abilities
