@@ -79,7 +79,7 @@ public class SqlDataManagement {
       String query = "UPDATE character SET isAlive = " + status + " where id=0";
       PreparedStatement ps = connection.prepareStatement(query);
       ps.executeUpdate();
-      System.out.println("Setting Character alive status: " + status);
+      // System.out.println("Setting Character alive status: " + status);
     }
   }
 }

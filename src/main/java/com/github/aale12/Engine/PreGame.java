@@ -8,12 +8,12 @@ public class PreGame {
 
   public static void newGamePrompt() {
     System.out.println("No character detected, please enter your name");
-    System.out.println(gameData);
+    // System.out.println(gameData);
   }
 
   public static boolean characterStatusCheck() throws SQLException {
     gameData = SqlDataManagement.retrieveSqlSaveDataResultSet();
-    System.out.println("gameData: " + gameData);
+    // System.out.println("gameData: " + gameData);
     return (gameData.contains("true"));
   }
 

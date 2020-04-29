@@ -22,7 +22,7 @@ public class Shop {
     System.out.println("What would you like to sell?");
     System.out.println("1) " + Player.getSmTrinketCt() + "x Bronze Monster Trinket: 20 Gold");
     System.out.println("2) " + Player.getMdTrinketCt() + "x Silver Monster Trinket: 40 Gold");
-    System.out.println("3) " + Player.getLgPotionCt() + "x Gold Monster Trinket: 80 Gold");
+    System.out.println("3) " + Player.getLgTrinketCt() + "x Gold Monster Trinket: 80 Gold");
     System.out.println("4) Exit");
   }
 
@@ -48,7 +48,6 @@ public class Shop {
           System.out.println("You bought a large potion for 60 gold.");
           System.out.println("You now have " + Player.getGold() + " gold remaining.");
         }
-        break;
       default:
         break;
     }
@@ -59,37 +58,40 @@ public class Shop {
       case "small":
         if (Player.getSmTrinketCt() < 1) {
           System.out.println("You don't have any trinkets! Try killing some monsters.");
+          break;
         } else {
           Player.setGold(Player.getGold() + Player.getSmTrinketCt() * 20);
           System.out.println("You sold " + Player.getSmTrinketCt() + " bronze monster trinkets for "
               + Player.getSmTrinketCt() * 20 + " gold.");
           System.out.println("You now have " + Player.getGold() + " gold.");
           Player.setSmTrinketCt(0);
+          break;
         }
-        break;
       case "medium":
         if (Player.getMdTrinketCt() < 1) {
           System.out.println("You don't have any trinkets! Try killing some monsters.");
+          break;
         } else {
           Player.setGold(Player.getGold() + Player.getMdTrinketCt() * 40);
           System.out.println("You sold " + Player.getMdTrinketCt() + " silver monster trinkets for "
               + Player.getMdTrinketCt() * 40 + " gold.");
           System.out.println("You now have " + Player.getGold() + " gold.");
           Player.setMdTrinketCt(0);
+          break;
         }
-        break;
       case "large":
         if (Player.getLgTrinketCt() < 1) {
           System.out.println(
               "You don't have any trinkets! Try killing some monsters. Powerful monsters drop better trinkets.");
+          break;
         } else {
           Player.setGold(Player.getGold() + Player.getLgTrinketCt() * 80);
           System.out.println("You sold " + Player.getLgTrinketCt() + " golden monster trinkets for "
               + Player.getLgTrinketCt() * 20 + " gold.");
           System.out.println("You now have " + Player.getGold() + " gold.");
           Player.setLgTrinketCt(0);
+          break;
         }
-        break;
     }
   }
 }

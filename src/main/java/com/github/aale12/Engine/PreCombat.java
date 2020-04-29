@@ -2,7 +2,7 @@ package com.github.aale12.Engine;
 
 public class PreCombat {
   public static void preCombatMenu() {
-    System.out.println("Welcome to Town! What would you like to do?");
+    System.out.println("> You are in Town! What would you like to do?\n");
     System.out.println("1) Battle");
     System.out.println("2) Shop");
     System.out.println("3) Save");
