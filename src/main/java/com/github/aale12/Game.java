@@ -1,16 +1,17 @@
 package com.github.aale12;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import com.github.aale12.Engine.Engine;
 
 public final class Game {
-  public void play() throws IOException {
+  public void play() throws IOException, NumberFormatException, SQLException {
     System.out.println("Welcome to Anthony's Game!");
     Engine.run();
   }
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, NumberFormatException, SQLException {
     Game game = new Game();
     game.play();
   }

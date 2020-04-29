@@ -1,8 +1,5 @@
 package com.github.aale12.Engine;
 
-import com.github.aale12.Engine.Combat;
-import com.github.aale12.io.SqlDataManagement;
-
 public class PreCombat {
   public static void preCombatMenu() {
     System.out.println("Welcome to Town! What would you like to do?");
@@ -12,9 +9,9 @@ public class PreCombat {
     System.out.println("4) Exit");
   }
 
-  public static void preCombatBattle() {
-    Combat.BattleStart();
-  }
+  // public static void preCombatBattle() {
+  // Combat.BattleStart();
+  // }
 
   public static void preCombatShop() {
     Shop.shopMenu();
